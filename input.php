@@ -18,4 +18,7 @@ if (mysqli_query($link, $sql)) {
 mysqli_close($link);
 
 ?>
-
+<meta charset="utf-8">
+<script type="text/javascript">
+    setTimeout('location.replace("index.php?srh=&srt=asc")', 3000);
+</script>

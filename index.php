@@ -20,12 +20,17 @@
           type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
-
+    <script type="text/javascript" src="/js/hltable.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+
+    <script type="text/javascript">
+        highlight_Table_Rows("color_table", "hover_Row", "clicked_Row");
+    </script>
     <![endif]-->
 </head>
 <body>
@@ -41,6 +46,34 @@
             </div>
         </div>
     </div>
+    <style type="text/css">
+        table th {
+            background-color: aliceblue;
+            text-align: center;
+            border: 2px solid lightgray;
+            padding: 5px;
+        }
+        table tr{
+            text-align: center;
+
+            padding: 30px;
+        }
+
+        td {
+            border: 2px solid lightgray;
+            padding: 5px;
+            padding-right: 30px;
+        }
+
+        .hover_Row {
+            background-color: yellow;
+
+        }
+
+        .clicked_Row {
+            background-color: lightgreen;
+        }
+    </style>
 </header>
 <!-- Main Content -->
 <div class="container">
@@ -50,7 +83,7 @@
             <p>Создать базу данных, содержащую таблицу Студенты с полями: ФИО, дата рождения, оценка по математике,
                 информатике и английскому. Вывести содержимое на веб-страницу. </p>
 
-            <table border="1">
+            <table id="color_table" cellpadding="5">
                 <tr>
                     <th align="center">ФИО</th>
                     <th>Дата рождения</th>
@@ -63,15 +96,16 @@
 
                 $mysqli = new mysqli("localhost", "root", "root", "students") or die("Ошибка " . mysqli($link));
 
-                $getStudentsQuery = $mysqli->prepare('SELECT `FIO`,`birthday`,`math`,`inform`,`english` FROM `students`');
+                $getStudentsQuery = $mysqli->prepare('SELECT `FIO`,`birthday`,`math`,`inform`,`english`,`id_student` FROM `students`');
                 $getStudentsQuery->bind_result($FIO, $birthday,
-                    $math, $inform, $english);
+                    $math, $inform, $english, $id);
 
                 $getStudentsQuery->execute();
 
                 while ($getStudentsQuery->fetch()) {
 
                     echo "<tr>
+            <td hidden='hidden'>$id</td>
 			<td>$FIO</td>
 			<td>" . date('d.m.Y', strtotime($birthday)) . "</td>
 			<td>$math</td>
@@ -88,6 +122,7 @@
             <br>
             <form>
                 <input type="button" value="Добавить студента" onClick='location.href="addStudent.php"'>
+                <input type="button" value="Удалить студента" onClick='location.href="addStudent.php"'>
             </form>
 
 
@@ -117,6 +152,11 @@
         </div>
     </div>
 </footer>
+
+<script src="js/hightlightsTable.js">
+    highlight_Table_Rows("color_table", "hover_Row", "clicked_Row");
+</script>
+
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
 
