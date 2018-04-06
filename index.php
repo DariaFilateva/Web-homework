@@ -1,4 +1,33 @@
 <html>
+<script src="https://yandex.st/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () { //Стартует по загрузке
+        $('#students td').click(function () {// Запускаем по клику на ячейке.
+            //Узнаем индекс строки + индекс ячейки таблицы
+            alert('id:' + $(this).html() + ' td:' + $(this).index());
+        });
+        $('#students tr').hover(
+            function () {
+                $(this).addClass('hover_color')
+            }, function () {
+                $(this).removeClass('hover_color')
+            });
+
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#students td").hover(function () {
+            $(this).addClass("hover_color")
+        }, function () {
+            $(this).removeClass("hover_color")
+        });
+
+        $("#students td").click(function () {
+            $(this).toggleClass("click_color");
+        });
+    });
+</script>
 <head>
 
     <meta charset="utf-8">
@@ -53,7 +82,8 @@
             border: 2px solid lightgray;
             padding: 5px;
         }
-        table tr{
+
+        table tr {
             text-align: center;
 
             padding: 30px;
@@ -66,12 +96,12 @@
         }
 
         .hover_Row {
-            background-color: yellow;
+            background-color: yellow !important;
 
         }
 
         .clicked_Row {
-            background-color: lightgreen;
+            background-color: lightgreen !important;
         }
     </style>
 </header>
@@ -83,7 +113,7 @@
             <p>Создать базу данных, содержащую таблицу Студенты с полями: ФИО, дата рождения, оценка по математике,
                 информатике и английскому. Вывести содержимое на веб-страницу. </p>
 
-            <table id="color_table" cellpadding="5">
+            <table id='students' cellpadding="5">
                 <tr>
                     <th align="center">ФИО</th>
                     <th>Дата рождения</th>
@@ -105,7 +135,7 @@
                 while ($getStudentsQuery->fetch()) {
 
                     echo "<tr>
-            <td hidden='hidden'>$id</td>
+            <td id='id_student' hidden='hidden'>$id</td>
 			<td>$FIO</td>
 			<td>" . date('d.m.Y', strtotime($birthday)) . "</td>
 			<td>$math</td>
@@ -120,6 +150,14 @@
                 ?>
             </table>
             <br>
+
+            <script>
+                $('#color_table tr').each(function () {
+                    $studentId = $(this).find(".id_student").html();
+                });
+            </script>
+            <?php echo $studentId; ?>
+
             <form>
                 <input type="button" value="Добавить студента" onClick='location.href="addStudent.php"'>
                 <input type="button" value="Удалить студента" onClick='location.href="addStudent.php"'>
@@ -129,7 +167,11 @@
         </div>
 
     </div>
+
+
 </div>
+
+
 <hr>
 
 <!-- Footer -->
