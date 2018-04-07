@@ -1,33 +1,37 @@
 <html>
 <script src="https://yandex.st/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+<style type="text/css">
+    .hover {
+        background-color: rgba(206, 241, 247, 0.18);
+    }
+</style>
+
 <script>
     $(document).ready(function () { //Стартует по загрузке
         $('#students td').click(function () {// Запускаем по клику на ячейке.
             //Узнаем индекс строки + индекс ячейки таблицы
-            alert('id:' + $(this).html() + ' td:' + $(this).index());
+            var col = $(this).parent().children().index($(this));
+            var row = $(this).parent().parent().children().index($(this).parent());
+            alert('Row: ' + row + ', Column: ' + col);
+            alert('id '+ $('#students tr:eq(' + row + ') td:eq(' + 0 + ')').html());
+
         });
-        $('#students tr').hover(
-            function () {
-                $(this).addClass('hover_color')
-            }, function () {
-                $(this).removeClass('hover_color')
-            });
+        $('#students tr').mouseover(function () {
+            $(this).addClass('hover');
+        });
+        $('#students tr').mouseout(function () {
+
+            $(this).removeClass('hover');
+
+        });
+        $('#students .id_student').each(function()
+        {
+            alert($(this).html());
+        });
 
     });
 </script>
-<script>
-    $(document).ready(function () {
-        $("#students td").hover(function () {
-            $(this).addClass("hover_color")
-        }, function () {
-            $(this).removeClass("hover_color")
-        });
 
-        $("#students td").click(function () {
-            $(this).toggleClass("click_color");
-        });
-    });
-</script>
 <head>
 
     <meta charset="utf-8">
@@ -113,7 +117,7 @@
             <p>Создать базу данных, содержащую таблицу Студенты с полями: ФИО, дата рождения, оценка по математике,
                 информатике и английскому. Вывести содержимое на веб-страницу. </p>
 
-            <table id='students' cellpadding="5">
+            <table class='st' id='students' cellpadding="5">
                 <tr>
                     <th align="center">ФИО</th>
                     <th>Дата рождения</th>
